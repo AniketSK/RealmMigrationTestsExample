@@ -43,12 +43,15 @@ public class MigrationExampleTest {
 
     @Test
     public void migrate_migrationSuceeds() throws Exception {
-        String REALM_NAME = "realmdb_1.realm";
+        String REALM_NAME = "realmdb_1.realm"; // Same name as the file for the old realm which was copied to assets.
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .schemaVersion(2) // NEW realm version.
                 .migration(new MigrationExample())
                 .build();// Get a configuration instance.
-        configFactory.copyRealmFromAssets(context, REALM_NAME, realmConfig); // Copy the stored version 1 realm file from assets to a NEW location.
+        configFactory.copyRealmFromAssets(context, REALM_NAME, realmConfig); // Copy the stored version 1 realm file
+        // from assets to a NEW location.
+        // Note: the old file is always deleted for you.
+        //   by the copyRealmFromAssets.
         Realm realm = Realm.getInstance(realmConfig);
         assert realm.getSchema().get(Dog.class.getSimpleName())
                 .hasField("age");

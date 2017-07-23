@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.aniket.realmmigrationtestexample.data.Dog;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,4 +41,20 @@ public class MigrationExampleTest {
         Realm.getInstance(realmConfig);
     }
 
+    @Test
+    public void migrate_migrationSuceeds() throws Exception {
+        String REALM_NAME = "realmdb_1.realm";
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                .schemaVersion(2) // NEW realm version.
+                .migration(new MigrationExample())
+                .build();// Get a configuration instance.
+        configFactory.copyRealmFromAssets(context, REALM_NAME, realmConfig); // Copy the stored version 1 realm file from assets to a NEW location.
+        Realm realm = Realm.getInstance(realmConfig);
+        assert realm.getSchema().get(Dog.class.getSimpleName())
+                .hasField("age");
+
+        assert realm.getSchema().get(Dog.class.getSimpleName())
+                .getFieldType("age").equals(int.class);
+        realm.close();
+    }
 }

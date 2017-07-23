@@ -8,4 +8,5 @@ import io.realm.RealmObject;
 
 public class Dog extends RealmObject {
     String name;
+    int age;
 }

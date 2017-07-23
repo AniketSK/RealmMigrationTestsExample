@@ -21,7 +21,7 @@ class MigrationExample implements RealmMigration {
     }
 
     private void updateToVersion2(RealmSchema schema) {
-        RealmObjectSchema dogSchema = schema.create(Dog.class.getSimpleName()); // Get the schema of the class to modify.
+        RealmObjectSchema dogSchema = schema.get(Dog.class.getSimpleName()); // Get the schema of the class to modify.
         dogSchema.addField("age", int.class); // Add the new field.
     }
 }

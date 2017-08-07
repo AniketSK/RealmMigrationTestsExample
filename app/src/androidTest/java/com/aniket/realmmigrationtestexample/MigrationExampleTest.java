@@ -56,9 +56,9 @@ public class MigrationExampleTest {
                 .migration(new MigrationExample())
                 .build();// Get a configuration instance.
         configFactory.copyRealmFromAssets(context, REALM_NAME, realmConfig); // Copy the stored version 1 realm file
-        // from assets to a NEW location.
-        // Note: the old file is always deleted for you.
-        //   by the copyRealmFromAssets.
+                                                                            // from assets to a NEW location.
+                                                                            // Note: the old file is always deleted for you.
+                                                                            //   by the copyRealmFromAssets.
         Realm realm = Realm.getInstance(realmConfig);
 
         assertTrue("There is no age Field", realm.getSchema().get(Dog.class.getSimpleName())

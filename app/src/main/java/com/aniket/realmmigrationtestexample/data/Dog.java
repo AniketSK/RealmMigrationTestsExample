@@ -7,6 +7,8 @@ import io.realm.RealmObject;
  */
 
 public class Dog extends RealmObject {
-    String name;
-    int age;
+    String name; // Existing field.
+    int age; // New field
 }
+
+

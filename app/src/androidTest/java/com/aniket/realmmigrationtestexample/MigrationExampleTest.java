@@ -13,7 +13,11 @@ import org.junit.runner.RunWith;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmFieldType;
 import io.realm.exceptions.RealmMigrationNeededException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by nicky on 23/7/17.
@@ -52,15 +56,16 @@ public class MigrationExampleTest {
                 .migration(new MigrationExample())
                 .build();// Get a configuration instance.
         configFactory.copyRealmFromAssets(context, REALM_NAME, realmConfig); // Copy the stored version 1 realm file
-        // from assets to a NEW location.
-        // Note: the old file is always deleted for you.
-        //   by the copyRealmFromAssets.
+                                                                            // from assets to a NEW location.
+                                                                            // Note: the old file is always deleted for you.
+                                                                            //   by the copyRealmFromAssets.
         Realm realm = Realm.getInstance(realmConfig);
-        assert realm.getSchema().get(Dog.class.getSimpleName())
-                .hasField("age");
 
-        assert realm.getSchema().get(Dog.class.getSimpleName())
-                .getFieldType("age").equals(int.class);
+        assertTrue("There is no age Field", realm.getSchema().get(Dog.class.getSimpleName())
+                .hasField("age"));
+
+        assertEquals(realm.getSchema().get(Dog.class.getSimpleName())
+                .getFieldType("age"), RealmFieldType.INTEGER);
         realm.close();
     }
 }
